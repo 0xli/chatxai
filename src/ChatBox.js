@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_API_KEY;
-const HOST = window.location.origin;
-const API_PORT = 4001;
+const HOST = window.location.origin.split(':')[0] + ':' + window.location.origin.split(':')[1];
+const API_PORT = process.env.REACT_APP_API_PORT || 4001;
 
-console.log(apiKey);
+console.log('API URL:', `${HOST}:${API_PORT}/api/chat`);
 const ChatBox = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
