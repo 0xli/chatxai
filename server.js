@@ -3,13 +3,37 @@ const cors = require('cors');
 const axios = require('axios');
 require('dotenv').config();
 
+// Simple in-memory store for rate limiting
+const requestCounts = {};
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 3001;
+// Rate limiting middleware
+const rateLimiter = (req, res, next) => {
+  const ip = req.ip;
+  const now = Date.now();
+  const dayStart = new Date().setHours(0,0,0,0);
+  
+  if (!requestCounts[ip]) {
+    requestCounts[ip] = { count: 0, resetTime: dayStart };
+  }
 
-app.post('/api/chat', async (req, res) => {
+  // Reset count if it's a new day
+  if (now > requestCounts[ip].resetTime) {
+    requestCounts[ip] = { count: 0, resetTime: dayStart };
+  }
+
+  if (requestCounts[ip].count >= 5) {
+    return res.status(429).json({ error: 'Rate limit exceeded. Try again tomorrow.' });
+  }
+
+  requestCounts[ip].count++;
+  next();
+};
+
+app.post('/api/chat', rateLimiter, async (req, res) => {
   try {
     const response = await axios.post('https://api.x.ai/v1/messages', {
       model: "grok-beta",
@@ -36,6 +60,7 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 }); 
