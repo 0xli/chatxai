@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -11,6 +11,15 @@ const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -52,6 +61,7 @@ const ChatBox = () => {
             {msg.text}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className="input-container">
         <input
