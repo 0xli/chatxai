@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_API_KEY;
+const HOST = window.location.origin;
+const API_PORT = 4001;
 
 console.log(apiKey);
 const ChatBox = () => {
@@ -16,9 +18,8 @@ const ChatBox = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await axios.post('http://localhost:3001/api/chat', {
-//      const response = await axios.post('/api/chat', {
-  messages: [{
+      const response = await axios.post(`${HOST}:${API_PORT}/api/chat`, {
+        messages: [{
           role: "user",
           content: input
         }]
