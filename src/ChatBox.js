@@ -43,7 +43,7 @@ const ChatBox = () => {
   };
 
   return (
-    <div>
+    <div className="chat-container">
       <div className="chat-window">
         {messages.map((msg, index) => (
           <div key={index} className={msg.sender}>
@@ -51,13 +51,15 @@ const ChatBox = () => {
           </div>
         ))}
       </div>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-      />
-      <button onClick={handleSend}>Send</button>
+      <div className="input-container">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+        />
+        <button onClick={handleSend}>Send</button>
+      </div>
       {isLoading && <p>Sending...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>

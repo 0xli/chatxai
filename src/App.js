@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './greylogo.webp';
 import './App.css';
 import './ChatBox'
 import ChatBox from './ChatBox';
@@ -7,20 +7,20 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ChatBox ></ChatBox> 
-
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="top-container">
+          <img src={logo} className="App-logo" alt="logo" />
+          <a
+            className="App-link"
+            href="https://fi.chat"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Back
+          </a>
+        </div>
+        <div className="chat-container">
+          <ChatBox />
+        </div>
       </header>
     </div>
   );
