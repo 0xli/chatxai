@@ -16,8 +16,9 @@ const ChatBox = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await axios.post('http://localhost:3001/api/chat', {
-        messages: [{
+//      const response = await axios.post('http://localhost:3001/api/chat', {
+      const response = await axios.post('/api/chat', {
+  messages: [{
           role: "user",
           content: input
         }]
