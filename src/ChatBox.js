@@ -36,7 +36,7 @@ const ChatBox = () => {
       setInput('');
     } catch (error) {
       console.error('Error sending message:', error);
-      setError('Failed to send message');
+      setError(error.response?.data?.error || 'Failed to send message');
     } finally {
       setIsLoading(false);
     }
