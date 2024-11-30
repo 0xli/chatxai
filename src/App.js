@@ -1,11 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import './ChatBox'
+import ChatBox from './ChatBox';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <ChatBox ></ChatBox> 
+
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
