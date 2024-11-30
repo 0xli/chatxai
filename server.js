@@ -1,4 +1,6 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const cors = require('cors');
 const axios = require('axios');
 require('dotenv').config();
@@ -8,6 +10,12 @@ const requestLimits = new Map();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// SSL configuration
+const sslOptions = {
+  key: fs.readFileSync(process.env.SSL_KEY_PATH),
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+};
 
 app.post('/api/chat', async (req, res) => {
   const ip = req.ip;
@@ -55,6 +63,6 @@ app.post('/api/chat', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+https.createServer(sslOptions, app).listen(PORT, '0.0.0.0', () => {
+  console.log(`Secure server running on https://0.0.0.0:${PORT}`);
 }); 
