@@ -1,3 +1,8 @@
+## run
+pm2 start npm --name server-4001 -- run server
+
+pm2 start npm --name chatxai -- run start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
